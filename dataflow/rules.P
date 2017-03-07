@@ -1,0 +1,11 @@
+:- table flowsto/2.
+
+flowsto(X,Y):- assign(Y,X).
+flowsto(X,Y):- var(X),nonvar(Y),flowsto(fb,X,Y).
+flowsto(X,Y):- nonvar(X),var(Y),flowsto(bf,X,Y).
+flowsto(X,Y):- var(X),var(Y),flowsto(bf,X,Y).
+flowsto(X,Y):- nonvar(X),nonvar(Y),flowsto(bf,X,Y).
+
+flowsto(bf,X,Y):- assign(Z,X),flowsto(bf,Z,Y).
+flowsto(fb,X,Y):- assign(Y,Z),flowsto(fb,X,Z).
+
